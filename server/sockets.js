@@ -4,7 +4,11 @@ module.exports = (server, db) => {
         moment = require('moment')
 
         io.on('connection', socket => {
-            //extra credit
-            
+            //socket events
+/* 
+1) join user
+2) add projects 
+3) add todo to the correct project
+*/
         })
 }
