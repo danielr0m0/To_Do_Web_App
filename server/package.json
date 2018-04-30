@@ -1,0 +1,16 @@
+{
+  "name": "to_do_web_app",
+  "version": "1.0.0",
+  "description": "a calendar todo list web app",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.16.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Angie, William, Alisha, Jurelly, Daniel",
+  "license": "ISC"
+}
