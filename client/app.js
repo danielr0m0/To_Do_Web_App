@@ -55,3 +55,4 @@ const app = new Vue({
 socket.on('successful-project', project =>{
     app.projects.push(project)
 })
+

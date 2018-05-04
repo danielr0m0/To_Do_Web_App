@@ -13,7 +13,7 @@ module.exports = (server, db) => {
 
             socket.on("addProject", project =>{
                 db.createProject(project)
-                .then(creaded => io.emit('successful-project', created))
+                .then(created => io.emit('successful-project', created))
             })
         })
 }
