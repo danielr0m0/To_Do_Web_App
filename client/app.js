@@ -1,11 +1,18 @@
 const socket = io()
 
 //have atleast one component 
-
-const _Component ={
-    templat = `<div>
+const projectComponent ={
+    template : `<div>
+                    <h2>project</h2>
                 </div>`,
-    props: ['obj']
+    props: ['project']
+}
+
+const todoComponent ={
+    template : `<div>
+                    <h2>todo</h2>
+                </div>`,
+props: ['todo']
 }
 
 //projects can be a dictionary aka hashmap in java  
@@ -19,9 +26,22 @@ const app = new Vue({
         password: '',
         failedName: '',
         user: {},
+        project: '',
+        todo:'',
         projects: [],
-        todo = ''
+        todos : [],
+    },
+    methods :{
+        addProject: function(){
+            socket.emit('addProject', this.project)
+        }
+
+    },
+    component:{
+        'todo-component' : todoComponent,
+        'project-component' : projectComponent
     }
+
 })
 
 
@@ -31,3 +51,7 @@ const app = new Vue({
 2) add projects 
 3) add todo to the correct project
 */
+
+socket.on('successful-project', project =>{
+    app.projects.push(project)
+})

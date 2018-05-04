@@ -7,7 +7,8 @@ const
     server = require('http').Server(app)
 
 app.use(express.static('../client'))
-require('./sockets')(server)
+const db = require('./db')
+require('./sockets')(server, db)
 
 
 server.listen(8080)

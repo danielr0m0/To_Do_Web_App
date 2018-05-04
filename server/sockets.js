@@ -10,5 +10,10 @@ module.exports = (server, db) => {
 2) add projects 
 3) add todo to the correct project
 */
+
+            socket.on("addProject", project =>{
+                db.createProject(project)
+                .then(creaded => io.emit('successful-project', created))
+            })
         })
 }
