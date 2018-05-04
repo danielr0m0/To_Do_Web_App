@@ -3,16 +3,15 @@ const socket = io()
 //have atleast one component 
 const projectComponent ={
     template : `<div>
-                    <h2>project</h2>
+                    <h2>{{project.name}}</h2>
                 </div>`,
     props: ['project']
 }
 
 const todoComponent ={
     template : `<div>
-                    <h2>todo</h2>
                 </div>`,
-props: ['todo']
+    props: ['todo']
 }
 
 //projects can be a dictionary aka hashmap in java  
@@ -37,14 +36,14 @@ const app = new Vue({
         }
 
     },
-    component:{
+    components:{
         'todo-component' : todoComponent,
         'project-component' : projectComponent
     }
 
 })
 
-
+app.project = "hello"
 //socket events
 /* 
 1) join user
