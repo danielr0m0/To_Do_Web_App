@@ -1,13 +1,22 @@
 const socket = io()
 
 //have atleast one component 
+const projectsComponent ={
+    template : `<div>
+                    <div>
+                        <project-component>
+                        <h1>Hello</h1>
+                        </project-component>
+                    </div>
+                </div>`,
+    props: ['projects']
+}
 const projectComponent ={
     template : `<div>
                     <h2>project</h2>
                 </div>`,
     props: ['project']
 }
-
 const todoComponent ={
     template : `<div>
                     <h2>todo</h2>
@@ -37,9 +46,9 @@ const app = new Vue({
         }
 
     },
-    component:{
+    components :{
         'todo-component' : todoComponent,
-        'project-component' : projectComponent
+        'project-component' : projectsComponent
     }
 
 })
