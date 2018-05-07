@@ -14,7 +14,7 @@ const projectsComponent ={
 const todosComponent ={
     template : `<div>
                     <div v-for="todo in todos">
-                        <h2> <input type="checkbox">  {{todo.description}}</h2>
+                        <h2> <input type="checkbox" :checked= "todo.done">  {{todo.description}}</h2>
                     </div>
                 </div>`,
     props: ['todos']
