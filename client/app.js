@@ -41,8 +41,12 @@ const app = new Vue({
         },
         addProject: function(){
             socket.emit('addProject', this.project)
-        },
-       
+
+        }, 
+        addTodo: function(){
+            socket.emit('addTodo', this.todo)
+        }
+
     },
     components:{
         'todo-component' : todoComponent,
@@ -63,5 +67,9 @@ app.projects.push({name: "test2tedryfgyftdrty fgfygiuyftdrytfuyg" , active: fals
 
 socket.on('successful-project', project =>{
     app.projects.push(project)
+})
+
+socket.on('successful-todo', todo => {
+    app.todos.push(todo)
 })
 
