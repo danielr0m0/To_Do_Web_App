@@ -33,6 +33,9 @@ const app = new Vue({
     methods :{
         addProject: function(){
             socket.emit('addProject', this.project)
+        }, 
+        addTodo: function(){
+            socket.emit('addTodo', this.todo)
         }
 
     },
@@ -53,5 +56,9 @@ app.project = "hello"
 
 socket.on('successful-project', project =>{
     app.projects.push(project)
+})
+
+socket.on('successful-todo', todo => {
+    app.todos.push(todo)
 })
 
