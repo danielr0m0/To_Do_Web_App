@@ -4,19 +4,20 @@ const socket = io()
 const projectsComponent ={
     template : `<div>
                     <div v-for="proj in projects">
-                        <div class ="bg-danger border border-info rounded m-4"  >
+                        <div class="bg-danger border border-info rounded m-4" v-on:click="setActive(proj)">
                             <h2>{{ proj.name }}</h2>
                         </div>
                     </div>
                 </div>`,
     props: ['projects']
 }
-
-const todoComponent ={
+const todosComponent ={
     template : `<div>
-                    <h2>hi</h2>
+                    <div v-for="todo in todos">
+                        <h2> <input type="checkbox">  {{todo.description}}</h2>
+                    </div>
                 </div>`,
-    props: ['todo']
+    props: ['todos']
 }
 
 //projects can be a dictionary aka hashmap in java  
@@ -33,11 +34,13 @@ const app = new Vue({
         project: '',
         todo:'',
         projects: [],
+        currentProj : {},
         todos : [],
     },
     methods :{
         setActive: function(proj){
             proj.active =true
+            console.log(proj);
         },
         addProject: function(){
             socket.emit('addProject', this.project)
@@ -45,18 +48,27 @@ const app = new Vue({
         }, 
         addTodo: function(){
             socket.emit('addTodo', this.todo)
+        },
+        check: function(){
+            console.log("object");
         }
 
     },
     components:{
-        'todo-component' : todoComponent,
+        'todos-component' : todosComponent,
         'projects-component' : projectsComponent
     }
 
 })
 
-app.projects.push({name: "test" , active :false, todos: [{description : "tester" , done :false},{description : "tester" , done :false} ]})
-app.projects.push({name: "test2tedryfgyftdrty fgfygiuyftdrytfuyg" , active: false, todos: [{description : "tester2ftfyfytfyftffyfytf" , done :false},{description : "tester2" , done :false} ]})
+
+const setActive = proj =>{
+    app.currentProj = proj
+    app.todos = proj.todos
+}
+
+app.projects.push({name: "test" , todos: [{description : "tester" , done :false},{description : "tester" , done :false} ]})
+app.projects.push({name: "test2tedryfgyftdrty fgfygiuyftdrytfuyg" , todos: [{description : "tester2ftfyfytfyftffyfytf" , done :false},{description : "tester2" , done :false} ]})
 
 //socket events
 /* 
