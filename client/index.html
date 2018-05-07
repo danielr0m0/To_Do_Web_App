@@ -17,8 +17,8 @@
     <div class="row mb-0" style="height: 100vh;">
         <div class="col-4 p-2 pl-3 bg-dark text-white text-center ">
             <h1>Projects</h1>
-            <input class="w-75 m-2 mr-3 text-white" type="text" placeholder="Add Project"></input>
-            <button type="button" v-on:click="check" class="btn btn-primary btn-sm">
+            <input class="w-75 m-2 mr-3" type="text" placeholder="Add Project" v-model:project="project"></input>
+            <button type="button" v-on:click="addProject" class="btn btn-primary btn-sm" :disabled="!project">
                     <i class="fas fa-plus"></i>
             </button>
 
@@ -30,7 +30,7 @@
                     <h1>Todos</h1>
             </div>
             <div>
-                <todos-component :todos="todos"></todos-component>
+                <todos-component :proj="currentProj"></todos-component>
             </div>
 
 

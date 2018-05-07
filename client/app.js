@@ -4,7 +4,7 @@ const socket = io()
 const projectsComponent ={
     template : `<div>
                     <div v-for="proj in projects">
-                        <div class="bg-danger border border-info rounded m-4" v-on:click="setActive(proj)">
+                        <div class="bg-danger border border-info rounded m-4" v-on:click="setActive(proj)"  >
                             <h2>{{ proj.name }}</h2>
                         </div>
                     </div>
@@ -13,11 +13,11 @@ const projectsComponent ={
 }
 const todosComponent ={
     template : `<div>
-                    <div v-for="todo in todos">
-                        <h2> <input type="checkbox" :checked= "todo.done">  {{todo.description}}</h2>
+                    <div v-for="todo in proj.todos">
+                        <h2> <input type="checkbox" :checked= "todo.done" v-on:change="toogle(todo,proj)">  {{todo.description}}</h2>
                     </div>
                 </div>`,
-    props: ['todos']
+    props: ['proj']
 }
 
 //projects can be a dictionary aka hashmap in java  
@@ -35,23 +35,15 @@ const app = new Vue({
         todo:'',
         projects: [],
         currentProj : {},
-        todos : [],
     },
     methods :{
-        setActive: function(proj){
-            proj.active =true
-            console.log(proj);
-        },
         addProject: function(){
-            socket.emit('addProject', this.project)
+            // socket.emit('addProject', this.project)
 
         }, 
         addTodo: function(){
             socket.emit('addTodo', this.todo)
         },
-        check: function(){
-            console.log("object");
-        }
 
     },
     components:{
@@ -64,7 +56,14 @@ const app = new Vue({
 
 const setActive = proj =>{
     app.currentProj = proj
-    app.todos = proj.todos
+
+}
+
+const toogle = (todo, proj) =>{
+    if(todo.done)
+        todo.done=false
+    else
+        todo.done=true
 }
 
 app.projects.push({name: "test" , todos: [{description : "tester" , done :false},{description : "tester" , done :false} ]})
