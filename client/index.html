@@ -8,6 +8,7 @@
 
    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
    <link href="https://fonts.googleapis.com/css?family=Rajdhani:400,700" rel="stylesheet">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
 
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 
@@ -16,17 +17,22 @@
 
 <body>
    <div id="todo-app">
-    <div class="row" style="height: 100vh;">
-        <div class="col-4 bg-dark text-white text-center">
+    <div class="row mb-0" style="height: 100vh;">
+        <div class="col-4 p-2 pl-3 bg-dark text-white text-center ">
             <h1>Projects</h1>
-            <input class="m-1 form-control-sm" type="text" placeholder="Add Project"></input>
+            <input class="w-75 m-2 mr-3 text-white" type="text" placeholder="Add Project"></input>
             <button type="button" class="btn btn-primary btn-sm">
                     <i class="fas fa-plus"></i>
             </button>
+
+            <projects-component :projects="projects" v-on:click="setActive"></project-component>
             
         </div>
-        <div class="col-8 text-center">
-            <h1 class="">Todos</h1>
+        <div class="col-8 p-0 text-center">
+            <div class=" bg-dark text-white p-2">
+                    <h1>Todos</h1>
+            </div>
+            <component :is="currentProj"></component>
         </div>
     </div>
    </div>

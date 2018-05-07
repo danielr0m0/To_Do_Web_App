@@ -1,15 +1,20 @@
 const socket = io()
 
 //have atleast one component 
-const projectComponent ={
+const projectsComponent ={
     template : `<div>
-                    <h2>{{project.name}}</h2>
+                    <div v-for="proj in projects">
+                        <div class ="bg-danger border border-info rounded m-4"  >
+                            <h2>{{ proj.name }}</h2>
+                        </div>
+                    </div>
                 </div>`,
-    props: ['project']
+    props: ['projects']
 }
 
 const todoComponent ={
     template : `<div>
+                    <h2>hi</h2>
                 </div>`,
     props: ['todo']
 }
@@ -31,19 +36,24 @@ const app = new Vue({
         todos : [],
     },
     methods :{
+        setActive: function(proj){
+            proj.active =true
+        },
         addProject: function(){
             socket.emit('addProject', this.project)
-        }
-
+        },
+       
     },
     components:{
         'todo-component' : todoComponent,
-        'project-component' : projectComponent
+        'projects-component' : projectsComponent
     }
 
 })
 
-app.project = "hello"
+app.projects.push({name: "test" , active :false, todos: [{description : "tester" , done :false},{description : "tester" , done :false} ]})
+app.projects.push({name: "test2tedryfgyftdrty fgfygiuyftdrytfuyg" , active: false, todos: [{description : "tester2ftfyfytfyftffyfytf" , done :false},{description : "tester2" , done :false} ]})
+
 //socket events
 /* 
 1) join user
