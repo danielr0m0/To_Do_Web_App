@@ -11,6 +11,9 @@ module.exports = (server, db) => {
 3) add todo to the correct project
 */
 
+            db.allProjects()
+            .then(projects => socket.emit('refresh-projects', projects))
+
             socket.on("addProject", project =>{
                 db.createProject(project)
                 .then(created => io.emit('successful-project', created))

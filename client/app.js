@@ -38,7 +38,7 @@ const app = new Vue({
     },
     methods :{
         addProject: function(){
-            // socket.emit('addProject', this.project)
+            socket.emit('addProject', this.project)
 
         }, 
         addTodo: function(){
@@ -66,8 +66,6 @@ const toogle = (todo, proj) =>{
         todo.done=true
 }
 
-app.projects.push({name: "test" , todos: [{description : "tester" , done :false},{description : "tester" , done :false} ]})
-app.projects.push({name: "test2tedryfgyftdrty fgfygiuyftdrytfuyg" , todos: [{description : "tester2ftfyfytfyftffyfytf" , done :false},{description : "tester2" , done :false} ]})
 
 //socket events
 /* 
@@ -75,6 +73,9 @@ app.projects.push({name: "test2tedryfgyftdrty fgfygiuyftdrytfuyg" , todos: [{des
 2) add projects 
 3) add todo to the correct project
 */
+socket.on('refresh-projects', projects =>{
+    app.projects = projects
+})
 
 socket.on('successful-project', project =>{
     app.projects.push(project)

@@ -70,7 +70,10 @@ const createTodo = data => {
     return Todo.create(content)
 }
 
+const allProjects = () => Project.find()
+
 module.exports ={
     createProject,
-    createTodo
+    createTodo,
+    allProjects
 }
