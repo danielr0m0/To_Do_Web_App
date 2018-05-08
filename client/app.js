@@ -91,7 +91,7 @@ socket.on('successful-project', project =>{
 })
 
 socket.on('successful-todo', todo => {
-    app.todos.push(todo)
+    app.currentProj.todos.push(todo)
 })
 
 socket.on('successful-removeProj', proj => {
