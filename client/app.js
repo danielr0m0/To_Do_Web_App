@@ -6,6 +6,9 @@ const projectsComponent ={
                     <div v-for="proj in projects">
                         <div class="bg-danger border border-info rounded m-4" v-on:click="setActive(proj)"  >
                             <h2>{{ proj.name }}</h2>
+                            <span class="icon">
+                                <a @click="removeProj(proj)" class="fa fa-trash has-text-danger"></a>
+                             </span>
                         </div>
                     </div>
                 </div>`,
@@ -44,6 +47,9 @@ const app = new Vue({
         addTodo: function(){
             socket.emit('addTodo', this.todo)
         },
+        removeProj: function(proj){
+            socket.emit('removeProj', proj)
+        }
 
     },
     components:{
@@ -56,7 +62,10 @@ const app = new Vue({
 
 const setActive = proj =>{
     app.currentProj = proj
+}
 
+const removeProj = proj => {
+    socket.emit('removeProj', proj)
 }
 
 const toogle = (todo, proj) =>{
@@ -83,5 +92,15 @@ socket.on('successful-project', project =>{
 
 socket.on('successful-todo', todo => {
     app.todos.push(todo)
+})
+
+socket.on('successful-removeProj', proj => {
+    let index = 0
+    for (let i = 0; i < app.projects.length; i++){
+        if (app.projects[i]._id == proj._id){
+            index = i
+        }
+    }
+    app.projects.splice(index, 1)
 })
 

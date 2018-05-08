@@ -21,6 +21,10 @@ module.exports = (server, db) => {
             socket.on('addTodo', todo => {
                 db.createTodo(todo)
                 .then(created => io.emit('successful-todo', created))
+            }),
+            socket.on('removeProj', proj => {
+                db.removeProj(proj)
+                .then(created => io.emit('successful-removeProj', proj))
             })
         })
 }

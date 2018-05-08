@@ -30,6 +30,12 @@
                     <h1>Todos</h1>
             </div>
             <div>
+                <br/>
+                <h4>Add Todo: <input type="text" v-model:todo="todo"></input></h4>
+                <button type="button" v-on:click="addTodo" class="btn btn-primary btn-sm" :disabled="!todo">
+                        <i class="fas fa-plus"></i>
+                </button>
+                
                 <todos-component :proj="currentProj"></todos-component>
             </div>
 

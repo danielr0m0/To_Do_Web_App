@@ -70,10 +70,18 @@ const createTodo = data => {
     return Todo.create(content)
 }
 
+const removeProj = data => {
+    return Project.remove(data, function (err){
+        if (err)
+            console.log(err)
+    })
+}
+
 const allProjects = () => Project.find()
 
 module.exports ={
     createProject,
     createTodo,
-    allProjects
+    allProjects,
+    removeProj
 }
