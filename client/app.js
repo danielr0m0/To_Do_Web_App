@@ -5,7 +5,7 @@ const projectsComponent ={
 
     template : `<div>
                     <div v-for="proj in projects">
-                        <div class="bg-danger border border-info rounded m-4" v-on:click="setActive(proj)"  >
+                        <div class="border border-info rounded m-4" v-on:click="setActive(proj)" :class="{'bg-info': proj.active}">
                             <h2>{{ proj.name }}</h2>
                             <span class="icon">
                                 <a @click="removeProj(proj)" class="fa fa-trash has-text-danger"></a>
@@ -31,7 +31,7 @@ const todosComponent ={
 const app = new Vue({
     el: '#todo-app',
     data:{
-        loggedIn: false,
+        selected: false,
         userName: '',
         password: '',
         failedName: '',
@@ -65,6 +65,7 @@ const app = new Vue({
 
 const setActive = proj =>{
     app.currentProj = proj
+    app.selected = true
 }
 
 const removeProj = proj => {
