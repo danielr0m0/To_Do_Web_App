@@ -20,6 +20,7 @@ Mongoose.connection.on('error', err => {
 
 const projectSchema = new Mongoose.Schema({
     name: "",
+    active: false,
     todos: [],
 }, { strict: false })
 
@@ -58,7 +59,8 @@ const
 
 const createProject = data => {
     const content = {
-        name: data
+        name: data,
+        active: false
     }
     return Project.create(content)
 }
@@ -79,7 +81,10 @@ const removeProj = data => {
 
 //change all active to false and then set one to true
 const activeProj = data =>{
-    return Project.updateMany()
+    //make all projects that are active false
+    return Project.update({active  : { $eq: true}}, {active: false})
+    
+
 }
 
 const allProjects = () => Project.find()
@@ -88,5 +93,6 @@ module.exports ={
     createProject,
     createTodo,
     allProjects,
-    removeProj
+    removeProj,
+    activeProj
 }

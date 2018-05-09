@@ -5,11 +5,6 @@ module.exports = (server, db) => {
 
         io.on('connection', socket => {
             //socket events
-/* 
-1) join user
-2) add projects 
-3) add todo to the correct project
-*/
 
             db.allProjects()
             .then(projects => socket.emit('refresh-projects', projects))
@@ -25,6 +20,10 @@ module.exports = (server, db) => {
             socket.on('removeProj', proj => {
                 db.removeProj(proj)
                 .then(created => io.emit('successful-removeProj', proj))
+            })
+            socket.on('setActive', proj =>{
+                db.activeProj(proj)
+                .then(r => io.emit('activeProj',r))
             })
         })
 }
