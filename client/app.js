@@ -4,9 +4,9 @@ const socket = io()
 const projectsComponent ={
     template : `<div>
                     <div v-for="proj in projects">
-                        <div class="bg-danger border border-info rounded m-4" v-on:click="setActive(proj)"  >
+                        <div class="border border-info rounded m-4 d-flex flex-row justify-content-around " v-on:click="setActive(proj)" :class="{ 'bg-secondary': proj.active }" >
                             <h2>{{ proj.name }}</h2>
-                            <span class="icon">
+                            <span class="icon mt-2" >
                                 <a @click="removeProj(proj)" class="fa fa-trash has-text-danger"></a>
                              </span>
                         </div>
@@ -29,7 +29,7 @@ const todosComponent ={
 const app = new Vue({
     el: '#todo-app',
     data:{
-        loggedIn: false,
+        selected: false,
         userName: '',
         password: '',
         failedName: '',
@@ -61,6 +61,8 @@ const app = new Vue({
 
 
 const setActive = proj =>{
+    socket.emit("setActive", proj)
+    app.selected = true
     app.currentProj = proj
 }
 
@@ -76,12 +78,6 @@ const toogle = (todo, proj) =>{
 }
 
 
-//socket events
-/* 
-1) join user
-2) add projects 
-3) add todo to the correct project
-*/
 socket.on('refresh-projects', projects =>{
     app.projects = projects
 })
@@ -95,12 +91,6 @@ socket.on('successful-todo', todo => {
 })
 
 socket.on('successful-removeProj', proj => {
-    let index = 0
-    for (let i = 0; i < app.projects.length; i++){
-        if (app.projects[i]._id == proj._id){
-            index = i
-        }
-    }
-    app.projects.splice(index, 1)
+    app.projects.splice(app.projects.findIndex(item => item._id == proj._id), 1)
 })
 

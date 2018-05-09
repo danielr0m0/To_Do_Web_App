@@ -58,7 +58,7 @@ const
 
 const createProject = data => {
     const content = {
-        name: data,
+        name: data
     }
     return Project.create(content)
 }
@@ -75,6 +75,11 @@ const removeProj = data => {
         if (err)
             console.log(err)
     })
+}
+
+//change all active to false and then set one to true
+const activeProj = data =>{
+    return Project.updateMany()
 }
 
 const allProjects = () => Project.find()
