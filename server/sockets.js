@@ -30,5 +30,9 @@ module.exports = (server, db) => {
                 db.activeProj(proj)
                 .then(project => io.emit('activeProj',project))
             })
+            socket.on('getTodos', proj =>{
+                db.getTodos(proj)
+                .then(todos => io.emit('get-todos',todos))
+            })
         })
 }

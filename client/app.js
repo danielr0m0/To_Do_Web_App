@@ -20,9 +20,13 @@ const projectsComponent ={
 
 const todosComponent ={
     template : `<div>
-                    <div v-for="todo in proj.todos">
-                        <h2> <input type="checkbox" :checked= "todo.done" v-on:change="toogle(todo,proj)">  {{todo.description}}</h2>
-                    </div>
+                    <h1 style="border-style: double" >{{proj.name}}</h1>
+                        <div v-for="todo in proj.todos">
+                            <div class="d-flex flex-row align-self-baseline m-2">
+                            <input type="checkbox" :checked= "todo.done" v-on:change="toogle(todo,proj)">
+                            <p>{{todo.description}}</p>
+                            </div>
+                        </div>
                 </div>`,
     props: ['proj']
 }
@@ -45,7 +49,7 @@ const app = new Vue({
 
         }, 
         addTodo: function(){
-            socket.emit('addTodo', this.todo)
+            socket.emit('addTodo', {p_id : this.currentProj._id, description : this.todo})
         },
         removeProj: function(proj){
             socket.emit('removeProj', proj)
@@ -62,6 +66,7 @@ const app = new Vue({
 
 const setActive = proj =>{
     socket.emit("setActive", proj)
+    socket.emit('getTodos', proj)
     app.selected = true
     app.currentProj = proj
 }
@@ -88,6 +93,11 @@ socket.on('successful-project', project =>{
 
 socket.on('successful-todo', todo => {
     app.currentProj.todos.push(todo)
+})
+
+socket.on('get-todos', todos =>{
+    console.log(todos);
+    app.currentProj.todos = todos
 })
 
 socket.on('successful-removeProj', proj => {

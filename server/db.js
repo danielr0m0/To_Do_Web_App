@@ -25,6 +25,7 @@ const projectSchema = new Mongoose.Schema({
 }, { strict: false })
 
 const todoSchema = new Mongoose.Schema({
+    p_id: "",
     description: "",
     done:false
 }, { strict: false })
@@ -67,9 +68,14 @@ const createProject = data => {
 
 const createTodo = data => {
     const content = {
-        description: data,
+        p_id : data.p_id,
+        description: data.description,
     }
     return Todo.create(content)
+}
+
+const getTodos = data =>{
+    return Todo.find({p_id : data._id})
 }
 
 const removeProj = data => {
@@ -101,5 +107,6 @@ module.exports ={
     allProjects,
     removeProj,
     activeProj,
-    findActive
+    findActive,
+    getTodos
 }
