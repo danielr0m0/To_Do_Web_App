@@ -48,10 +48,11 @@ module.exports = (server, db) => {
                 //     }
                 // })
 
-                db.clearTodo()
+                db.clearTodo(currentProj)
                 .then(removed =>{
-                    
-                   
+                    console.log(removed)
+                    db.getTodos(currentProj)
+                    .then(todo =>io.emit('get-todos', todos))
                 })
             })
         })
