@@ -31,7 +31,8 @@
                 <h2>Add Todo: <input type="text" v-model.trim="todo" v-model:todo="todo" ></input></h2>
                 <button type="button" v-on:click="addTodo" class="btn btn-primary btn-sm" :disabled="!todo">
                         <i class="fas fa-plus"></i>
-                </button>
+                </button><br/><br/>
+                <button type="button" v-on:click="clearCompleted" class="btn btn-primary btn-sm">Clear Completed</button><br/><br/>
                 
                 <todos-component :proj="currentProj"></todos-component>
             </div>

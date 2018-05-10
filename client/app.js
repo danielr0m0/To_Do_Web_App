@@ -53,6 +53,9 @@ const app = new Vue({
         },
         removeProj: function(proj){
             socket.emit('removeProj', proj)
+        },
+        clearCompleted: function(){
+            socket.emit('clearCompleted', this.currentProj)
         }
 
     },
@@ -111,7 +114,7 @@ socket.on('activeProj', projects =>{
 socket.on('set-active', project =>{
     if(project){
         app.selected = true
-        app.currentProj =project
+        app.currentProj = project
     }
     else{
         app.selected = false

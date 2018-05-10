@@ -70,6 +70,8 @@ const createTodo = data => {
     const content = {
         p_id : data.p_id,
         description: data.description,
+        //changed to true for testing reasons
+        done: true
     }
     return Todo.create(content)
 }
@@ -80,6 +82,13 @@ const getTodos = data =>{
 
 const removeProj = data => {
     return Project.remove(data, function (err){
+        if (err)
+            console.log(err)
+    })
+}
+
+const removeTodo = data => {
+    return Todo.remove(data, function (err){
         if (err)
             console.log(err)
     })
@@ -108,5 +117,6 @@ module.exports ={
     removeProj,
     activeProj,
     findActive,
-    getTodos
+    getTodos,
+    removeTodo
 }

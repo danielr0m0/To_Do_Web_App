@@ -25,14 +25,28 @@ module.exports = (server, db) => {
                 .then(created => {
                     io.emit('successful-removeProj', proj)
                 })
-            })
+            }),
             socket.on('setActive', proj =>{
                 db.activeProj(proj)
                 .then(project => io.emit('activeProj',project))
-            })
+            }),
             socket.on('getTodos', proj =>{
                 db.getTodos(proj)
                 .then(todos => io.emit('get-todos',todos))
+            }),
+            socket.on('clearCompleted', currentProj => {
+                db.getTodos(currentProj)
+                .then(todos => {
+                    for (let i = 0; i < todos.length; i++){
+                        if (todos[i].done == true){
+                            db.removeTodo(todos[i])
+                            .then(todos => {
+                                db.getTodos(currentProj)
+                                .then (todos => io.emit('get-todos', todos))
+                            })
+                        }
+                    }
+                })
             })
         })
 }
