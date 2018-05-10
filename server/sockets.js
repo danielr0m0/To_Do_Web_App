@@ -52,7 +52,7 @@ module.exports = (server, db) => {
                 .then(removed =>{
                     console.log(removed)
                     db.getTodos(currentProj)
-                    .then(todo =>io.emit('get-todos', todos))
+                    .then(todo =>io.emit('get-todos', todo))
                 })
             })
         })
