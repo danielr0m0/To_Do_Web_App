@@ -14,6 +14,7 @@ const projectsComponent ={
                 </div>`,
     props: ['projects']
 }
+
 const todosComponent ={
     template : `<div>
                     <div v-for="todo in proj.todos">
@@ -30,10 +31,6 @@ const app = new Vue({
     el: '#todo-app',
     data:{
         selected: false,
-        userName: '',
-        password: '',
-        failedName: '',
-        user: {},
         project: '',
         todo:'',
         projects: [],
