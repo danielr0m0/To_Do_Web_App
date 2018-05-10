@@ -92,6 +92,7 @@ const activeProj = data =>{
 }
 
 const findActive = () => Project.findOne({active : true}) 
+
 const allProjects = () => Project.find()
 
 module.exports ={
