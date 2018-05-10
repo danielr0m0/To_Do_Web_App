@@ -82,11 +82,16 @@ const removeProj = data => {
 //change all active to false and then set one to true
 const activeProj = data =>{
     //make all projects that are active false
-    return Project.update({active  : { $eq: true}}, {active: false})
-    
-
+    return Project.update({active  : { $eq: true}, _id: {$ne: data._id}}, {active: false})
+    .then(update =>{
+      return Project.update({_id: data._id}, {active: true})
+       .then(update =>{
+           return Project.find()
+       })
+    })
 }
 
+const findActive = () => Project.findOne({active : true}) 
 const allProjects = () => Project.find()
 
 module.exports ={
@@ -94,5 +99,6 @@ module.exports ={
     createTodo,
     allProjects,
     removeProj,
-    activeProj
+    activeProj,
+    findActive
 }

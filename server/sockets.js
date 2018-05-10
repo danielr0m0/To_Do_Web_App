@@ -9,6 +9,9 @@ module.exports = (server, db) => {
             db.allProjects()
             .then(projects => socket.emit('refresh-projects', projects))
 
+            db.findActive()
+            .then(project => socket.emit('set-active', project))
+
             socket.on("addProject", project =>{
                 db.createProject(project)
                 .then(created => io.emit('successful-project', created))
@@ -19,11 +22,13 @@ module.exports = (server, db) => {
             }),
             socket.on('removeProj', proj => {
                 db.removeProj(proj)
-                .then(created => io.emit('successful-removeProj', proj))
+                .then(created => {
+                    io.emit('successful-removeProj', proj)
+                })
             })
             socket.on('setActive', proj =>{
                 db.activeProj(proj)
-                .then(r => io.emit('activeProj',r))
+                .then(project => io.emit('activeProj',project))
             })
         })
 }

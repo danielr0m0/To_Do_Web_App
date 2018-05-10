@@ -94,6 +94,13 @@ socket.on('successful-removeProj', proj => {
     app.projects.splice(app.projects.findIndex(item => item._id == proj._id), 1)
 })
 
-socket.on('activeProj', r =>{
-    console.log(r)
+socket.on('activeProj', projects =>{
+   app.projects = projects
+})
+
+socket.on('set-active', project =>{
+    if(project){
+        app.selected = true
+        app.currentProj =project
+    }
 })
