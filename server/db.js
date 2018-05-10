@@ -110,6 +110,8 @@ const findActive = () => Project.findOne({active : true})
 
 const allProjects = () => Project.find()
 
+const clearTodo = (proj) => Todo.remove({done : true, p_id : {$eq : proj._id}}, false)
+
 module.exports ={
     createProject,
     createTodo,
@@ -118,5 +120,6 @@ module.exports ={
     activeProj,
     findActive,
     getTodos,
-    removeTodo
+    removeTodo,
+    clearTodo
 }
