@@ -27,7 +27,7 @@ const projectSchema = new Mongoose.Schema({
 const todoSchema = new Mongoose.Schema({
     p_id: "",
     description: "",
-    done:false
+    done:false,
 }, { strict: false })
 
 const

@@ -19,12 +19,16 @@ const projectsComponent ={
 }
 
 const todosComponent ={
-    template : `<div>
+    template : `<div class="container">
                     <h1 style="border-style: double" >{{proj.name}}</h1>
                         <div v-for="todo in proj.todos">
-                            <div class="d-flex flex-row align-self-baseline m-2">
-                            <input type="checkbox" :checked= "todo.done" v-on:change="toogle(todo,proj)">
-                            <p>{{todo.description}}</p>
+                            <div class="d-flex align-items-center">
+                                <div clas="col">
+                                    <input type="checkbox" :checked= "todo.done" v-on:change="toogle(todo,proj)">
+                                </div>
+                                <div clas="col text-center">
+                                    <p>{{todo.description}}</p>
+                                </div>
                             </div>
                         </div>
                 </div>`,
@@ -50,6 +54,7 @@ const app = new Vue({
         }, 
         addTodo: function(){
             socket.emit('addTodo', {p_id : this.currentProj._id, description : this.todo})
+            this.todo =""
         },
         removeProj: function(proj){
             socket.emit('removeProj', proj)
