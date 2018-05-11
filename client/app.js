@@ -27,7 +27,7 @@ const todosComponent ={
                         <div v-for="todo in proj.todos">
                             <div class="m-2 pl-3 pr-3 d-flex justify-content-start align-items-center border border-info rounded">
                                 <div class="d-flex flex-column">
-                                    <input type="checkbox" :checked= "todo.done" v-on:change="toogle(todo,proj)">
+                                    <input type="checkbox" :checked= "todo.done" v-on:change="toogle(todo)">
                                 </div>
                                 <div class="mt-2 ml-3">
                                     <p>{{todo.description}}</p>
@@ -95,11 +95,8 @@ const removeTodo = (todo) => {
     socket.emit('removeTodo', todo)
 }
 
-const toogle = (todo, proj) =>{
-    if(todo.done)
-        todo.done=false
-    else
-        todo.done=true
+const toogle = (todo) =>{
+    socket.emit('updateTodos', todo)
 }
 
 

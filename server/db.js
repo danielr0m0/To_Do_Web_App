@@ -46,7 +46,7 @@ const createTodo = data => {
         p_id : data.p_id,
         description: data.description,
         //changed to true for testing reasons
-        done: true
+        done: false
     }
     return Todo.create(content)
 }
@@ -82,6 +82,15 @@ const activeProj = data =>{
     })
 }
 
+const updateTodos = todo => {
+    if (todo.done) {
+        return Todo.update({_id: todo._id}, {done : false})
+                .then(update => Todo.find({p_id : todo.p_id}))
+    } else
+        return Todo.update({_id: todo._id}, {done : true})
+        .then(update => Todo.find({p_id : todo.p_id}))
+}
+
 const archiveTodos = () => Todo.remove({done : true})
 
 const getProjects = todo => Project.findOne({_id: todo.p_id})
@@ -103,5 +112,6 @@ module.exports ={
     removeTodo,
     clearTodo,
     getProjects,
-    archiveTodos
+    archiveTodos,
+    updateTodos
 }

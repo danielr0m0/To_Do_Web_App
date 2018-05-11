@@ -61,6 +61,10 @@ module.exports = (server, db) => {
                         db.getTodos(currentProj)
                         .then(todo => io.emit('get-todos', todo))
                 })
+            }),
+            socket.on('updateTodos', todo => {
+                db.updateTodos(todo)
+                .then(todos => io.emit('get-todos', todos))
             })
         })
 }
