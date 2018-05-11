@@ -46,6 +46,7 @@ const app = new Vue({
     data:{
         selected: false,
         project: '',
+        error: '',
         todo:'',
         projects: [],
         currentProj : {},
@@ -78,7 +79,7 @@ const setActive = proj =>{
     socket.emit('getTodos', proj)
     app.selected = true
     app.currentProj = proj
-    app.selected = true
+    app.error=''
 }
 
 const removeProj = proj => {
@@ -98,7 +99,14 @@ socket.on('refresh-projects', projects =>{
 })
 
 socket.on('successful-project', project =>{
+    app.error=''
     app.projects.push(project)
+    app.project=''
+})
+
+socket.on('unsuccessful-project', e =>{
+    app.error = `Project '${app.project}' already exists`
+    app.project=''
 })
 
 socket.on('successful-todo', todo => {

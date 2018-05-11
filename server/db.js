@@ -27,7 +27,8 @@ const
 const createProject = data => {
     const content = {
         name: data,
-        active: false
+        active: false,
+        todos: []
     }
     // TODO fix unhandled promise rejection
     return Project.findOne(content)

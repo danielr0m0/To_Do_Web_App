@@ -15,6 +15,7 @@ module.exports = (server, db) => {
             socket.on("addProject", project =>{
                 db.createProject(project)
                 .then(created => io.emit('successful-project', created))
+                .catch(e => io.emit('unsuccessful-project', e))
             }),
             socket.on('addTodo', todo => {
                 db.createTodo(todo)
