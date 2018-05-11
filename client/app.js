@@ -65,8 +65,10 @@ const app = new Vue({
         },
         clearCompleted: function(){
             socket.emit('clearCompleted', this.currentProj)
+        },
+        archive: function(){
+            socket.emit('archive', this.currentProj)
         }
-
     },
 
     components:{
@@ -122,7 +124,6 @@ socket.on('successful-todo', todo => {
 })
 
 socket.on('get-todos', todos =>{
-    console.log(todos);
     app.currentProj.todos = todos
 })
 

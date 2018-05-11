@@ -17,13 +17,13 @@
 
             <div class="d-flex flex-row justify-content-around m-4 pt-3">
                 <input class="form-control" type="text" placeholder="Add Project" v-model:project="project"></input>
-                <button type="button" class="btn btn-primary btn-sm ml-2" v-on:click="addProject" :disabled="!project">
+                <button type="button" class="btn btn-primary btn-sm ml-2 mr-2" v-on:click="addProject" :disabled="!project">
                     <i class="fas fa-plus"></i>
                 </button>
+                <button type="button" class="btn btn-danger btn-sm" v-on:click="archive">Archive</button>
             </div>
             <p class="text-danger" :error="error" v-if="error"> *{{error}}</p>
                 <projects-component :projects="projects"></project-component>
-
         </div>
 
         <div class="col-8 p-0 text-center">

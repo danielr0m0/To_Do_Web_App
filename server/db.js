@@ -82,6 +82,8 @@ const activeProj = data =>{
     })
 }
 
+const archiveTodos = () => Todo.remove({done : true})
+
 const getProjects = todo => Project.findOne({_id: todo.p_id})
 
 const findActive = () => Project.findOne({active : true}) 
@@ -100,5 +102,6 @@ module.exports ={
     getTodos,
     removeTodo,
     clearTodo,
-    getProjects
+    getProjects,
+    archiveTodos
 }

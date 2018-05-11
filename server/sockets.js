@@ -53,6 +53,14 @@ module.exports = (server, db) => {
                     db.getTodos(currentProj)
                     .then(todo =>io.emit('get-todos', todo))
                 })
+            }),
+            socket.on('archive', currentProj => {
+                db.archiveTodos()
+                .then(removeTodo => {
+                    if (currentProj)
+                        db.getTodos(currentProj)
+                        .then(todo => io.emit('get-todos', todo))
+                })
             })
         })
 }
