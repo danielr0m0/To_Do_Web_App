@@ -29,7 +29,14 @@ const createProject = data => {
         name: data,
         active: false
     }
-    return Project.create(content)
+    // TODO fix unhandled promise rejection
+    return Project.findOne(content)
+        .then(found => {
+            if (found)
+                throw new Error('Project already exists')
+            else
+                return Project.create(content)
+        })
 }
 
 const createTodo = data => {

@@ -1,7 +1,8 @@
 const socket = io()
 
-//have atleast one component 
+// have at least one component 
 const projectsComponent ={
+
     template : `<div>
                     <div v-for="proj in projects">
                         <div class="border border-info rounded m-4 d-flex flex-row justify-content-around flex-wrap" :class="{ 'bg-secondary': proj.active }" >
@@ -63,6 +64,7 @@ const app = new Vue({
         }
 
     },
+
     components:{
         'todos-component' : todosComponent,
         'projects-component' : projectsComponent
@@ -76,6 +78,7 @@ const setActive = proj =>{
     socket.emit('getTodos', proj)
     app.selected = true
     app.currentProj = proj
+    app.selected = true
 }
 
 const removeProj = proj => {
