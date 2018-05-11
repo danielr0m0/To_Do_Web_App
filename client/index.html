@@ -34,7 +34,7 @@
             <div class="d-flex flex-row justify-content-around m-4" v-show="selected">
                 <br/>
                 <input class="form-control" type="text" placeholder="Add Todo" v-model:todo="todo"></input>
-                <button type="button" class="btn btn-primary btn-sm" v-on:click="addTodo" :disabled="!todo">
+                <button type="button" class="btn btn-primary btn-sm ml-1 mr-1" v-on:click="addTodo" :disabled="!todo">
                     <i class="fas fa-plus"></i>
                 </button>
                 <br/>
