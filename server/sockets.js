@@ -5,14 +5,12 @@ module.exports = (server, db) => {
 
         io.on('connection', socket => {
             //socket events
-/* 
-1) join user
-2) add projects 
-3) add todo to the correct project
-*/
 
             db.allProjects()
             .then(projects => socket.emit('refresh-projects', projects))
+
+            db.findActive()
+            .then(project => socket.emit('set-active', project))
 
             socket.on("addProject", project =>{
                 db.createProject(project)
@@ -24,7 +22,38 @@ module.exports = (server, db) => {
             }),
             socket.on('removeProj', proj => {
                 db.removeProj(proj)
-                .then(created => io.emit('successful-removeProj', proj))
+                .then(created => {
+                    io.emit('successful-removeProj', proj)
+                })
+            }),
+            socket.on('setActive', proj =>{
+                db.activeProj(proj)
+                .then(project => io.emit('activeProj',project))
+            }),
+            socket.on('getTodos', proj =>{
+                db.getTodos(proj)
+                .then(todos => io.emit('get-todos',todos))
+            }),
+            socket.on('clearCompleted', currentProj => {
+                // db.getTodos(currentProj)
+                // .then(todos => {
+                //     for (let i = 0; i < todos.length; i++){
+                //         if (todos[i].done == true){
+                //             db.removeTodo(todos[i])
+                //             .then(todos => {
+                //                 db.getTodos(currentProj)
+                //                 .then (todos => io.emit('get-todos', todos))
+                //             })
+                //         }
+                //     }
+                // })
+
+                db.clearTodo(currentProj)
+                .then(removed =>{
+                    console.log(removed)
+                    db.getTodos(currentProj)
+                    .then(todo =>io.emit('get-todos', todo))
+                })
             })
         })
 }

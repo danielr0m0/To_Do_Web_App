@@ -5,10 +5,13 @@ const projectsComponent ={
 
     template : `<div>
                     <div v-for="proj in projects">
-                        <div class="border border-info rounded m-4" v-on:click="setActive(proj)" :class="{'bg-info': proj.active}">
+                        <div class="border border-info rounded m-4 d-flex flex-row justify-content-around " v-on:click="setActive(proj)" :class="{ 'bg-secondary': proj.active }" >
                             <h2>{{ proj.name }}</h2>
-                            <span class="icon">
-                                <a @click="removeProj(proj)" class="fa fa-trash has-text-danger"></a>
+                            <span class="icon mt-2" v-show="!proj.active">
+                                <a @click="removeProj(proj)" class="fa fa-trash text-danger fa-2x" ></a>
+                             </span>
+                             <span class="icon mt-2" v-show="proj.active">
+                                <i class="far fa-arrow-alt-circle-right text-info fa-2x"></i>
                              </span>
                         </div>
                     </div>
@@ -17,10 +20,18 @@ const projectsComponent ={
 }
 
 const todosComponent ={
-    template : `<div>
-                    <div v-for="todo in proj.todos">
-                        <h2> <input type="checkbox" :checked= "todo.done" v-on:change="toogle(todo,proj)">  {{todo.description}}</h2>
-                    </div>
+    template : `<div class="container">
+                    <h1 style="border-style: double" >{{proj.name}}</h1>
+                        <div v-for="todo in proj.todos">
+                            <div class="d-flex align-items-center">
+                                <div clas="col">
+                                    <input type="checkbox" :checked= "todo.done" v-on:change="toogle(todo,proj)">
+                                </div>
+                                <div clas="col text-center">
+                                    <p>{{todo.description}}</p>
+                                </div>
+                            </div>
+                        </div>
                 </div>`,
     props: ['proj']
 }
@@ -32,10 +43,6 @@ const app = new Vue({
     el: '#todo-app',
     data:{
         selected: false,
-        userName: '',
-        password: '',
-        failedName: '',
-        user: {},
         project: '',
         todo:'',
         projects: [],
@@ -47,10 +54,14 @@ const app = new Vue({
 
         }, 
         addTodo: function(){
-            socket.emit('addTodo', this.todo)
+            socket.emit('addTodo', {p_id : this.currentProj._id, description : this.todo})
+            this.todo =""
         },
         removeProj: function(proj){
             socket.emit('removeProj', proj)
+        },
+        clearCompleted: function(){
+            socket.emit('clearCompleted', this.currentProj)
         }
 
     },
@@ -64,6 +75,9 @@ const app = new Vue({
 
 
 const setActive = proj =>{
+    socket.emit("setActive", proj)
+    socket.emit('getTodos', proj)
+    app.selected = true
     app.currentProj = proj
     app.selected = true
 }
@@ -80,12 +94,6 @@ const toogle = (todo, proj) =>{
 }
 
 
-//socket events
-/* 
-1) join user
-2) add projects 
-3) add todo to the correct project
-*/
 socket.on('refresh-projects', projects =>{
     app.projects = projects
 })
@@ -98,13 +106,26 @@ socket.on('successful-todo', todo => {
     app.currentProj.todos.push(todo)
 })
 
-socket.on('successful-removeProj', proj => {
-    let index = 0
-    for (let i = 0; i < app.projects.length; i++){
-        if (app.projects[i]._id == proj._id){
-            index = i
-        }
-    }
-    app.projects.splice(index, 1)
+socket.on('get-todos', todos =>{
+    console.log(todos);
+    app.currentProj.todos = todos
 })
 
+socket.on('successful-removeProj', proj => {
+    app.projects.splice(app.projects.findIndex(item => item._id == proj._id), 1)
+})
+
+socket.on('activeProj', projects =>{
+   app.projects = projects
+})
+
+socket.on('set-active', project =>{
+    if(project){
+        app.selected = true
+        app.currentProj = project
+    }
+    else{
+        app.selected = false
+        app.currentProj={}
+    }
+})

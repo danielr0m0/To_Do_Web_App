@@ -4,11 +4,6 @@
    <meta charset="UTF-8">
    <title>Todo App</title>
 
-   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-   <link href="https://fonts.googleapis.com/css?family=Rajdhani:400,700" rel="stylesheet">
-
-   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css"> -->
-
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 
    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
@@ -18,7 +13,7 @@
    <div id="todo-app">
     <div class="row mb-0" style="height: 100vh;">
         <div class="col-4 p-2 pl-3 bg-dark text-white text-center ">
-            <h1>Projects</h1>
+            <h1 style="text-shadow:2px 5px #E87C7C">Projects</h1>
             <div class="d-flex flex-row justify-content-around m-4 pt-3">
                 <input class="form-control" type="text" placeholder="Add Project" v-model:project="project"></input>
                 <button type="button" class="btn btn-primary btn-sm" v-on:click="addProject" :disabled="!project">
@@ -30,7 +25,7 @@
 
         <div class="col-8 p-0 text-center">
             <div class=" bg-dark text-white p-2">
-                    <h1>Todos</h1>
+                <h1 style="text-shadow:2px 5px #E87C7C">To-Dos</h1>
             </div>
             <div class="d-flex flex-row justify-content-around m-4" v-show="selected">
                 <br/>
@@ -38,6 +33,9 @@
                 <button type="button" class="btn btn-primary btn-sm" v-on:click="addTodo" :disabled="!todo">
                     <i class="fas fa-plus"></i>
                 </button>
+                <button type="button" v-on:click="clearCompleted" class="btn btn-primary btn-sm">Clear Completed</button><br/><br/>
+                
+                <todos-component :proj="currentProj"></todos-component>
             </div>
             <div class="col-8 p-4 text-left">
                 <h4><todos-component :proj="currentProj"></todos-component></h4>
