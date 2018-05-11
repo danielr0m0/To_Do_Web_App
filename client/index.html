@@ -12,12 +12,14 @@
 <body>
    <div id="todo-app">
     <div class="row mb-0" style="height: 100vh;">
-        <div class="col-4 p-2 pl-3 bg-dark text-white text-center ">
+        <div class="col-4 p-2 pl-3 bg-dark text-white text-center">
             <h1 style="text-shadow:2px 5px #E87C7C">Projects</h1>
-            <input class="border-0 w-75 m-2 mr-3 border-bottom" type="text" placeholder="Add Project" v-model:project="project"></input>
-            <button type="button" v-on:click="addProject" class="btn btn-primary btn-sm" :disabled="!project">
-                    <i class="fas fa-plus"></i>
+            <div class="d-flex flex-row justify-content-around flex-wrap align-items-center">
+                <input class="w-75 m-2 mr-3 p-1" type="text" placeholder="Add Project" v-model:project="project"></input>
+                     <button type="button" v-on:click="addProject" class="btn btn-primary" :disabled="!project">
+                            <i class="fas fa-plus fa-lg"></i>
             </button>
+            </div>
 
             <projects-component :projects="projects"></project-component>
             
@@ -27,14 +29,23 @@
                 <h1 style="text-shadow:2px 5px #E87C7C">To-Dos</h1>
             </div>
             <div v-show="selected" >
-                <br/>
-                <h2>Add Todo: <input type="text" v-model.trim="todo" v-model:todo="todo" ></input></h2>
-                <button type="button" v-on:click="addTodo" class="btn btn-primary btn-sm" :disabled="!todo">
-                        <i class="fas fa-plus"></i>
-                </button><br/><br/>
+                <div class="m-2 d-flex flex-row align-items-center justify-content-md-center">
+                    <div class="">
+                        <h2>Add Todo:</h2>
+                    </div>
+                    <div class="col-6">
+                        <input type="text" v-model:todo="todo" class="w-100"></input>
+                    </div>
+                    <div class= "">
+                        <button type="button" v-on:click="addTodo" class="btn btn-primary btn-sm" :disabled="!todo">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                    </div>
+                </div>
+                
                 <button type="button" v-on:click="clearCompleted" class="btn btn-primary btn-sm">Clear Completed</button><br/><br/>
                 
-                <todos-component :proj="currentProj"></todos-component>
+                <todos-component :proj="currentProj" ></todos-component>
             </div>
 
 

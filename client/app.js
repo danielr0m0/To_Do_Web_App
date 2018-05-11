@@ -4,8 +4,8 @@ const socket = io()
 const projectsComponent ={
     template : `<div>
                     <div v-for="proj in projects">
-                        <div class="border border-info rounded m-4 d-flex flex-row justify-content-around " v-on:click="setActive(proj)" :class="{ 'bg-secondary': proj.active }" >
-                            <h2>{{ proj.name }}</h2>
+                        <div class="border border-info rounded m-4 d-flex flex-row justify-content-around flex-wrap" :class="{ 'bg-secondary': proj.active }" >
+                            <h2 v-on:click="setActive(proj)"  >{{ proj.name }}</h2>
                             <span class="icon mt-2" v-show="!proj.active">
                                 <a @click="removeProj(proj)" class="fa fa-trash text-danger fa-2x" ></a>
                              </span>
@@ -22,22 +22,24 @@ const todosComponent ={
     template : `<div class="container">
                     <h1 style="border-style: double" >{{proj.name}}</h1>
                         <div v-for="todo in proj.todos">
-                            <div class="d-flex align-items-center">
-                                <div clas="col">
+                            <div class="m-2 pl-3 pr-3 d-flex justify-content-start align-items-center border border-info rounded">
+                                <div class="d-flex flex-column">
                                     <input type="checkbox" :checked= "todo.done" v-on:change="toogle(todo,proj)">
                                 </div>
-                                <div clas="col text-center">
+                                <div class="mt-2 ml-3">
                                     <p>{{todo.description}}</p>
+                                </div>
+                                <div class="ml-auto pl-2">
+                                    <span class="icon">
+                                        <a @click="" class="fa fa-trash text-danger fa-lg" ></a>
+                                    </span>
                                 </div>
                             </div>
                         </div>
                 </div>`,
-    props: ['proj']
+    props: ['proj' ]
 }
 
-//projects can be a dictionary aka hashmap in java  
-//[key : value] value can be array of tod and key
-// be the project todos 
 const app = new Vue({
     el: '#todo-app',
     data:{
@@ -55,9 +57,6 @@ const app = new Vue({
         addTodo: function(){
             socket.emit('addTodo', {p_id : this.currentProj._id, description : this.todo})
             this.todo =""
-        },
-        removeProj: function(proj){
-            socket.emit('removeProj', proj)
         },
         clearCompleted: function(){
             socket.emit('clearCompleted', this.currentProj)
@@ -118,8 +117,7 @@ socket.on('activeProj', projects =>{
 
 socket.on('set-active', project =>{
     if(project){
-        app.selected = true
-        app.currentProj = project
+        setActive(project)
     }
     else{
         app.selected = false
