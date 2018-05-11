@@ -30,12 +30,9 @@ module.exports = (server, db) => {
             socket.on('removeTodo', (todo) => {
                 db.removeTodo(todo)
                 .then(remove => {
-                    db.getProjects(todo)
-                    .then(proj => {
-                        db.getTodos(proj)
-                        .then(todos => {
-                            io.emit('get-todos', todos)
-                        })
+                    db.getProjTodos(todo)
+                    .then(todos=>{
+                        io.emit('get-todos',todos)
                     })
                 })
             }),

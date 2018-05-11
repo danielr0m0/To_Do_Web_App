@@ -45,7 +45,6 @@ const createTodo = data => {
     const content = {
         p_id : data.p_id,
         description: data.description,
-        //changed to true for testing reasons
         done: false
     }
     return Todo.create(content)
@@ -54,6 +53,12 @@ const createTodo = data => {
 const getTodos = data =>{
     return Todo.find({p_id : data._id})
 }
+
+
+const getProjTodos = todo =>{
+    return Todo.find({p_id : todo.p_id})
+}
+
 
 const removeProj = data => {
     Todo.remove({p_id : data._id})
@@ -113,5 +118,6 @@ module.exports ={
     clearTodo,
     getProjects,
     archiveTodos,
-    updateTodos
+    updateTodos,
+    getProjTodos
 }

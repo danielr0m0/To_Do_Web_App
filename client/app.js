@@ -30,7 +30,8 @@ const todosComponent ={
                                     <input type="checkbox" :checked= "todo.done" v-on:change="toogle(todo)">
                                 </div>
                                 <div class="mt-2 ml-3">
-                                    <p>{{todo.description}}</p>
+                                 <p v-show="!todo.done">{{todo.description}}</p>
+                                 <p v-show="todo.done"><s>{{todo.description}}</s><p>
                                 </div>
                                 <div class="ml-auto pl-2">
                                     <span class="icon">
@@ -121,6 +122,7 @@ socket.on('successful-todo', todo => {
 })
 
 socket.on('get-todos', todos =>{
+    console.log(todos);
     app.currentProj.todos = todos
 })
 
