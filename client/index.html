@@ -18,9 +18,9 @@
                 <input class="form-control" type="text" placeholder="Add Project" v-model:project="project"></input>
                 <button type="button" class="btn btn-primary btn-sm" v-on:click="addProject" :disabled="!project">
                     <i class="fas fa-plus"></i>
-                </button> 
+                </button>
             </div>
-            <projects-component :projects="projects"></project-component>
+                <projects-component :projects="projects"></project-component>
         </div>
 
         <div class="col-8 p-0 text-center">

@@ -1,6 +1,6 @@
 const socket = io()
 
-//have atleast one component 
+// have at least one component 
 const projectsComponent ={
 
     template : `<div>
