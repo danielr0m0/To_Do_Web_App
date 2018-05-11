@@ -11,7 +11,7 @@ module.exports = (server, db) => {
 
             db.findActive()
             .then(project => socket.emit('set-active', project))
-
+            // Angie
             socket.on("addProject", project =>{
                 db.createProject(project)
                 .then(created => io.emit('successful-project', created))
@@ -25,6 +25,18 @@ module.exports = (server, db) => {
                 db.removeProj(proj)
                 .then(created => {
                     io.emit('successful-removeProj', proj)
+                })
+            }),
+            socket.on('removeTodo', (todo) => {
+                db.removeTodo(todo)
+                .then(remove => {
+                    db.getProjects(todo)
+                    .then(proj => {
+                        db.getTodos(proj)
+                        .then(todos => {
+                            io.emit('get-todos', todos)
+                        })
+                    })
                 })
             }),
             socket.on('setActive', proj =>{

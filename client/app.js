@@ -34,7 +34,7 @@ const todosComponent ={
                                 </div>
                                 <div class="ml-auto pl-2">
                                     <span class="icon">
-                                        <a @click="" class="fa fa-trash text-danger fa-lg" ></a>
+                                        <a @click="removeTodo(todo)" class="fa fa-trash text-danger fa-lg" ></a>
                                     </span>
                                 </div>
                             </div>
@@ -54,6 +54,7 @@ const app = new Vue({
         currentProj : {},
     },
     methods :{
+        // Angie
         addProject: function(){
             socket.emit('addProject', this.project)
 
@@ -88,6 +89,10 @@ const removeProj = proj => {
     socket.emit('removeProj', proj)
 }
 
+const removeTodo = (todo) => {
+    socket.emit('removeTodo', todo)
+}
+
 const toogle = (todo, proj) =>{
     if(todo.done)
         todo.done=false
@@ -100,6 +105,7 @@ socket.on('refresh-projects', projects =>{
     app.projects = projects
 })
 
+// Angie
 socket.on('successful-project', project =>{
     app.error=''
     app.projects.push(project)

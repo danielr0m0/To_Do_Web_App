@@ -24,13 +24,14 @@ const
     Project = Mongoose.model('projects', projectSchema),
     Todo = Mongoose.model('todos', todoSchema)
 
+    // Angie
 const createProject = data => {
     const content = {
         name: data,
         active: false,
         todos: []
     }
-    // TODO fix unhandled promise rejection
+
     return Project.findOne(content)
         .then(found => {
             if (found)
@@ -66,10 +67,7 @@ const removeProj = data => {
 }
 
 const removeTodo = data => {
-    return Todo.remove(data, function (err){
-        if (err)
-            console.log(err)
-    })
+    return Todo.remove({_id: data._id})
 }
 
 //change all active to false and then set one to true
@@ -83,6 +81,8 @@ const activeProj = data =>{
        })
     })
 }
+
+const getProjects = todo => Project.findOne({_id: todo.p_id})
 
 const findActive = () => Project.findOne({active : true}) 
 
@@ -99,5 +99,6 @@ module.exports ={
     findActive,
     getTodos,
     removeTodo,
-    clearTodo
+    clearTodo,
+    getProjects
 }
