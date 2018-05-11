@@ -55,6 +55,10 @@ const getTodos = data =>{
 }
 
 const removeProj = data => {
+    Todo.remove({p_id : data._id})
+    .catch(e =>{
+        console.log(err);
+    })
     return Project.remove(data, function (err){
         if (err)
             console.log(err)

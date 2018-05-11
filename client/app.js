@@ -7,17 +7,19 @@ const projectsComponent ={
                     <div v-for="proj in projects">
                         <div class="border border-info rounded m-4 d-flex flex-row justify-content-around flex-wrap" :class="{ 'bg-secondary': proj.active }" >
                             <h2 v-on:click="setActive(proj)"  >{{ proj.name }}</h2>
-                            <span class="icon mt-2" v-show="!proj.active">
+                            <span class="icon mt-2"  v-show="!proj.active">
                                 <a @click="removeProj(proj)" class="fa fa-trash text-danger fa-2x" ></a>
                              </span>
                              <span class="icon mt-2" v-show="proj.active">
                                 <i class="far fa-arrow-alt-circle-right text-info fa-2x"></i>
-                             </span>
+                            </span>
                         </div>
                     </div>
                 </div>`,
     props: ['projects']
 }
+
+{/* */}
 
 const todosComponent ={
     template : `<div class="container">
@@ -58,7 +60,7 @@ const app = new Vue({
         }, 
         addTodo: function(){
             socket.emit('addTodo', {p_id : this.currentProj._id, description : this.todo})
-            this.todo =""
+            this.todo =''
         },
         clearCompleted: function(){
             socket.emit('clearCompleted', this.currentProj)
@@ -75,7 +77,7 @@ const app = new Vue({
 
 
 const setActive = proj =>{
-    socket.emit("setActive", proj)
+    socket.emit('setActive', proj)
     socket.emit('getTodos', proj)
     app.selected = true
     app.currentProj = proj
