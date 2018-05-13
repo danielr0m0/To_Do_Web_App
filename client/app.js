@@ -2,7 +2,6 @@ const socket = io()
 
 // have at least one component 
 const projectsComponent ={
-
     template : `<div>
                     <div v-for="proj in projects">
                         <div class="border border-info rounded m-4 d-flex flex-row justify-content-around flex-wrap" :class="{ 'bg-secondary': proj.active }" >
@@ -19,7 +18,6 @@ const projectsComponent ={
     props: ['projects']
 }
 
-{/* */}
 
 const todosComponent ={
     template : `<div class="container">
@@ -79,7 +77,7 @@ const app = new Vue({
 
 })
 
-
+//daniel
 const setActive = proj =>{
     socket.emit('setActive', proj)
     socket.emit('getTodos', proj)
@@ -88,14 +86,17 @@ const setActive = proj =>{
     app.error=''
 }
 
+//william
 const removeProj = proj => {
     socket.emit('removeProj', proj)
 }
 
+//alisha
 const removeTodo = (todo) => {
     socket.emit('removeTodo', todo)
 }
 
+//jurelly
 const toogle = (todo) =>{
     socket.emit('updateTodos', todo)
 }
@@ -117,29 +118,29 @@ socket.on('unsuccessful-project', e =>{
     app.project=''
 })
 
+//daniel
+socket.on('activeProj', projects =>{
+    app.projects = projects
+ })
+ 
+ socket.on('set-active', project =>{
+     if(project){
+         setActive(project)
+     }
+     else{
+         app.selected = false
+         app.currentProj={}
+     }
+ })
+
 socket.on('successful-todo', todo => {
     app.currentProj.todos.push(todo)
 })
-
-socket.on('get-todos', todos =>{
-    console.log(todos);
-    app.currentProj.todos = todos
-})
-
+//william
 socket.on('successful-removeProj', proj => {
     app.projects.splice(app.projects.findIndex(item => item._id == proj._id), 1)
 })
-
-socket.on('activeProj', projects =>{
-   app.projects = projects
-})
-
-socket.on('set-active', project =>{
-    if(project){
-        setActive(project)
-    }
-    else{
-        app.selected = false
-        app.currentProj={}
-    }
+//jurelly & alisha
+socket.on('get-todos', todos =>{
+    app.currentProj.todos = todos
 })

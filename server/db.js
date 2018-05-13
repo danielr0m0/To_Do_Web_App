@@ -24,7 +24,7 @@ const
     Project = Mongoose.model('projects', projectSchema),
     Todo = Mongoose.model('todos', todoSchema)
 
-    // Angie
+// Angie
 const createProject = data => {
     const content = {
         name: data,
@@ -50,34 +50,12 @@ const createTodo = data => {
     return Todo.create(content)
 }
 
-const getTodos = data =>{
-    return Todo.find({p_id : data._id})
-}
+const allProjects = () => Project.find()
 
-
-const getProjTodos = todo =>{
-    return Todo.find({p_id : todo.p_id})
-}
-
-
-const removeProj = data => {
-    Todo.remove({p_id : data._id})
-    .catch(e =>{
-        console.log(err);
-    })
-    return Project.remove(data, function (err){
-        if (err)
-            console.log(err)
-    })
-}
-
-const removeTodo = data => {
-    return Todo.remove({_id: data._id})
-}
-
+//daniel
 //change all active to false and then set one to true
 const activeProj = data =>{
-    //make all projects that are active false
+    //make all projects that are active false  
     return Project.update({active  : { $eq: true}, _id: {$ne: data._id}}, {active: false})
     .then(update =>{
       return Project.update({_id: data._id}, {active: true})
@@ -85,6 +63,29 @@ const activeProj = data =>{
            return Project.find()
        })
     })
+}
+
+const findActive = () => Project.findOne({active : true}) 
+
+
+//wiliam
+const removeProj = data => {
+    Todo.remove({p_id : data._id})
+    .catch(e =>{
+        console.log(e);
+    })
+    return Project.remove(data, function (err){
+        if (err)
+            console.log(err)
+    })
+}
+
+const archiveTodos = () => Todo.remove({done : true})
+
+
+//jurelly
+const getTodos = id =>{
+    return Todo.find({p_id : id})
 }
 
 const updateTodos = todo => {
@@ -96,15 +97,14 @@ const updateTodos = todo => {
         .then(update => Todo.find({p_id : todo.p_id}))
 }
 
-const archiveTodos = () => Todo.remove({done : true})
+//alisha
 
-const getProjects = todo => Project.findOne({_id: todo.p_id})
+const removeTodo = data => {
+    return Todo.remove({_id: data._id})
+}
 
-const findActive = () => Project.findOne({active : true}) 
+const clearTodo = (proj) => Todo.remove({done : true, p_id : {$eq : proj._id}})
 
-const allProjects = () => Project.find()
-
-const clearTodo = (proj) => Todo.remove({done : true, p_id : {$eq : proj._id}}, false)
 
 module.exports ={
     createProject,
@@ -116,8 +116,6 @@ module.exports ={
     getTodos,
     removeTodo,
     clearTodo,
-    getProjects,
     archiveTodos,
     updateTodos,
-    getProjTodos
 }
