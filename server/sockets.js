@@ -4,15 +4,12 @@ module.exports = (server, db) => {
         moment = require('moment')
 
         io.on('connection', socket => {
-            //socket events
 
             db.allProjects()
             .then(projects => socket.emit('refresh-projects', projects))
 
-            //daniel
             db.findActive()
             .then(project => socket.emit('set-active', project))
-            // Angie
             socket.on("addProject", project =>{
                 db.createProject(project)
                 .then(created => io.emit('successful-project', created))
@@ -22,12 +19,10 @@ module.exports = (server, db) => {
                 db.createTodo(todo)
                 .then(created => io.emit('successful-todo', created))
             }),
-             //daniel
              socket.on('setActive', proj =>{
                 db.activeProj(proj)
                 .then(project => io.emit('activeProj',project))
             }),
-            //wiliam
             socket.on('removeProj', proj => {
                 db.removeProj(proj)
                 .then(created => {
@@ -42,7 +37,6 @@ module.exports = (server, db) => {
                         .then(todo => io.emit('get-todos', todo))
                 })
             }),
-            //jurely
             socket.on('getTodos', proj =>{
                 db.getTodos(proj._id)
                 .then(todos => io.emit('get-todos',todos))
@@ -51,7 +45,6 @@ module.exports = (server, db) => {
                 db.updateTodos(todo)
                 .then(todos => io.emit('get-todos', todos))
             }),
-            //alisha
             socket.on('removeTodo', (todo) => {
                 db.removeTodo(todo)
                 .then(remove => {

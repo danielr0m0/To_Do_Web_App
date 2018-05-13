@@ -24,7 +24,6 @@ const
     Project = Mongoose.model('projects', projectSchema),
     Todo = Mongoose.model('todos', todoSchema)
 
-// Angie
 const createProject = data => {
     const content = {
         name: data,
@@ -52,8 +51,6 @@ const createTodo = data => {
 
 const allProjects = () => Project.find()
 
-//daniel
-//change all active to false and then set one to true
 const activeProj = data =>{
     //make all projects that are active false  
     return Project.update({active  : { $eq: true}, _id: {$ne: data._id}}, {active: false})
@@ -68,7 +65,6 @@ const activeProj = data =>{
 const findActive = () => Project.findOne({active : true}) 
 
 
-//wiliam
 const removeProj = data => {
     Todo.remove({p_id : data._id})
     .catch(e =>{
@@ -82,8 +78,6 @@ const removeProj = data => {
 
 const archiveTodos = () => Todo.remove({done : true})
 
-
-//jurelly
 const getTodos = id =>{
     return Todo.find({p_id : id})
 }
@@ -96,8 +90,6 @@ const updateTodos = todo => {
         return Todo.update({_id: todo._id}, {done : true})
         .then(update => Todo.find({p_id : todo.p_id}))
 }
-
-//alisha
 
 const removeTodo = data => {
     return Todo.remove({_id: data._id})

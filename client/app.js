@@ -1,6 +1,5 @@
 const socket = io()
 
-// have at least one component 
 const projectsComponent ={
     template : `<div>
                     <div v-for="proj in projects">
@@ -54,11 +53,11 @@ const app = new Vue({
     methods :{
         // Angie
         addProject: function(){
-            socket.emit('addProject', this.project)
-
+            
+            socket.emit('addProject', this.project.trim())
         }, 
         addTodo: function(){
-            socket.emit('addTodo', {p_id : this.currentProj._id, description : this.todo})
+            socket.emit('addTodo', {p_id : this.currentProj._id, description : this.todo.trim()})
             this.todo =''
         },
         clearCompleted: function(){
@@ -76,7 +75,6 @@ const app = new Vue({
 
 })
 
-//daniel
 const setActive = proj =>{
     socket.emit('setActive', proj)
     socket.emit('getTodos', proj)
@@ -85,17 +83,14 @@ const setActive = proj =>{
     app.error=''
 }
 
-//william
 const removeProj = proj => {
     socket.emit('removeProj', proj)
 }
 
-//alisha
 const removeTodo = (todo) => {
     socket.emit('removeTodo', todo)
 }
 
-//jurelly
 const toggle = (todo) =>{
     socket.emit('updateTodos', todo)
 }
@@ -108,7 +103,6 @@ socket.on('successful-todo', todo => {
     app.currentProj.todos.push(todo)
 })
 
-// Angie
 socket.on('successful-project', project =>{
     app.error=''
     app.projects.push(project)
@@ -119,8 +113,6 @@ socket.on('unsuccessful-project', e =>{
     app.error = `Project '${app.project}' already exists`
     app.project=''
 })
-
-//daniel
 socket.on('activeProj', projects =>{
     app.projects = projects
  })
@@ -134,12 +126,10 @@ socket.on('activeProj', projects =>{
          app.currentProj={}
      }
  })
-
-//william
 socket.on('successful-removeProj', proj => {
     app.projects.splice(app.projects.findIndex(item => item._id == proj._id), 1)
 })
-//jurelly 
+ 
 socket.on('get-todos', todos =>{
     app.currentProj.todos = todos
 })
