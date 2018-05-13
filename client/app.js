@@ -6,18 +6,15 @@ const projectsComponent ={
                     <div v-for="proj in projects">
                         <div class="border border-info rounded m-4 d-flex flex-row justify-content-around flex-wrap" :class="{ 'bg-secondary': proj.active }" >
                             <h2 v-on:click="setActive(proj)"  >{{ proj.name }}</h2>
-                            <span class="icon mt-2"  v-show="!proj.active">
+                            <span class="icon mt-2">
                                 <a @click="removeProj(proj)" class="fa fa-trash text-danger fa-2x" ></a>
                              </span>
-                             <span class="icon mt-2" v-show="proj.active">
-                                <i class="far fa-arrow-alt-circle-right text-info fa-2x"></i>
-                            </span>
+                             
                         </div>
                     </div>
                 </div>`,
     props: ['projects']
 }
-
 
 const todosComponent ={
     template : `<div class="container">
@@ -88,6 +85,7 @@ const setActive = proj =>{
 
 //william
 const removeProj = proj => {
+    app.selected= false
     socket.emit('removeProj', proj)
 }
 
