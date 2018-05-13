@@ -103,7 +103,10 @@ const removeTodo = data => {
     return Todo.remove({_id: data._id})
 }
 
-const clearTodo = (proj) => Todo.remove({done : true, p_id : {$eq : proj._id}})
+const clearTodo = (proj) => Todo.remove({
+    done : true,
+    p_id : {$eq : proj._id}
+})
 
 
 module.exports ={
